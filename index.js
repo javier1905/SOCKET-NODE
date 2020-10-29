@@ -30,7 +30,7 @@ const myServerExpress = servidor.listen(servidor.get('port'), e => {
 const io = SocketIO.listen(myServerExpress)
 
 io.on('connection', socket => {
-	console.log(socket.id)
+	// console.log(socket.id)
 	socket.on('disconnect', user => {
 		var index = -1
 		vecConect.forEach((u, i) => {
@@ -48,8 +48,17 @@ io.on('connection', socket => {
 		vecConect = [...vecConect, { idConexion: socket.id, nombreUsuario: nameUser }]
 		io.sockets.emit('updateConect', vecConect)
 	})
-	socket.on('abrirConversacion', dato => {
-		socket.to(dato.idConexion).emit('abrirConversa', {})
+
+	socket.on('enviarMsj:react-node', datos => {
+		socket.to(dato.idSocketReceptor).emit('resibirMsj:node-react', {
+			idSocketEmisor: socket.id,
+			nombreEmisor: datos.nombre,
+			mensajeRecibido: datos.mensaje,
+		})
 	})
-	console.log(vecConect)
+
+	// socket.on('abrirConversacion', dato => {
+	// 	socket.to(dato.idConexion).emit('abrirConversa', {})
+	// })
+	// console.log(vecConect)
 })
