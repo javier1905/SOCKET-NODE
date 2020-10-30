@@ -50,7 +50,7 @@ io.on('connection', socket => {
 	})
 
 	socket.on('enviarMsj:react-node', datos => {
-		socket.to(dato.idSocketReceptor).emit('resibirMsj:node-react', {
+		socket.to(datos.idSocketReceptor).emit('resibirMsj:node-react', {
 			idSocketEmisor: socket.id,
 			nombreEmisor: datos.nombre,
 			mensajeRecibido: datos.mensaje,
