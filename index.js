@@ -30,7 +30,6 @@ const myServerExpress = servidor.listen(servidor.get('port'), e => {
 const io = SocketIO.listen(myServerExpress)
 
 io.on('connection', socket => {
-	// console.log(socket.id)
 	socket.on('disconnect', user => {
 		var index = -1
 		vecConect.forEach((u, i) => {
@@ -56,9 +55,4 @@ io.on('connection', socket => {
 			mensajeRecibido: datos.mensaje,
 		})
 	})
-
-	// socket.on('abrirConversacion', dato => {
-	// 	socket.to(dato.idConexion).emit('abrirConversa', {})
-	// })
-	// console.log(vecConect)
 })
