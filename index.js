@@ -55,4 +55,14 @@ io.on('connection', socket => {
 			mensajeRecibido: datos.mensaje,
 		})
 	})
+
+	socket.on('escribiendo:react-node', datos => {
+		socket
+			.to(datos.idSocketEmisor)
+			.emit('escribiendo:node-react', {
+				idSocketEmisor: socket.id,
+				nombreEmisor: datos.nameUser,
+				es: datos.es,
+			})
+	})
 })
