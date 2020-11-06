@@ -16,10 +16,15 @@ servidor.use(morgan('dev'))
 
 servidor.set('port', process.env.PORT || 5000)
 
+//TODO: MIDDELWARE
+servidor.use(require('./ROUTER/checkLogin'))
+servidor.use('/api/login', require('./ROUTER/login'))
+servidor.use(require('./ROUTER/getUserLogin'))
+servidor.use('/api/usuario', require('./ROUTER/usuarios'))
+
 const myServerExpress = servidor.listen(servidor.get('port'), e => {
-	if (e) {
-		console.error(e)
-	} else {
+	if (e) console.error(e)
+	else {
 		vecConect = []
 		console.log('Conectado en el puerto 5000')
 	}
@@ -57,12 +62,10 @@ io.on('connection', socket => {
 	})
 
 	socket.on('escribiendo:react-node', datos => {
-		socket
-			.to(datos.idSocketEmisor)
-			.emit('escribiendo:node-react', {
-				idSocketEmisor: socket.id,
-				nombreEmisor: datos.nameUser,
-				es: datos.es,
-			})
+		socket.to(datos.idSocketEmisor).emit('escribiendo:node-react', {
+			idSocketEmisor: socket.id,
+			nombreEmisor: datos.nameUser,
+			es: datos.es,
+		})
 	})
 })

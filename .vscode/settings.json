@@ -16,5 +16,32 @@
         "titleBar.inactiveForeground": "#e7e7e799"
     },
     "npm-scripts.showStartNotification": false,
-    "peacock.color": "#215732"
+    "peacock.color": "#215732" ,
+    "editor.tokenColorCustomizations": {
+
+        "textMateRules": [
+            {
+                "scope": "entity.name.tag support.class.component",
+                "settings": {
+                    "foreground": "#43c7a6"
+                },
+                
+      
+
+            },{
+                "scope": "string.unquoted",
+                "settings": {
+                    "foreground": "#FFCB6B"
+                },
+            },
+            {
+                "scope": "variable.name",
+                "settings": {
+                    "foreground": "#487df0"
+                },
+            }
+         
+        ]
+    
+        },
 }
