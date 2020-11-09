@@ -15,10 +15,10 @@ router.post('/', async (req, res) => {
 		if (result) {
 			cerrarConexionPOOL()
 			if (result.rowsAffected[0] === 0)
-				res.status(200).json({ mensaje: 'Usuario inexistente ', opOK: false })
+				res.status(200).json({ mensaje: 'Usuario inexistente ', logOK: false })
 			else {
 				if (!bcrypt.compareSync(pwUsuario, result.recordset[0].pwUsuario)) {
-					res.status(200).json({ mensaje: 'Password incorrecta ', opOK: false })
+					res.status(200).json({ mensaje: 'Password incorrecta ', logOK: false })
 				} else {
 					const user = {
 						idUsuario: result.recordset[0].idUsuario,
@@ -29,8 +29,8 @@ router.post('/', async (req, res) => {
 					}
 					jwt.sign(user, process.env.SECRET_TOKEN, { expiresIn: 14400 }, (error, token) => {
 						error
-							? res.status(200).json({ mensaje: 'Error al generar el token', opOK: false })
-							: res.status(200).json({ token, opOK: true })
+							? res.status(200).json({ mensaje: 'Error al generar el token', logOK: false })
+							: res.status(200).json({ token, logOK: true })
 					})
 				}
 			}

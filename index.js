@@ -19,7 +19,7 @@ servidor.set('port', process.env.PORT || 5000)
 //TODO: MIDDELWARE
 servidor.use(require('./ROUTER/checkLogin'))
 servidor.use('/api/login', require('./ROUTER/login'))
-servidor.use(require('./ROUTER/getUserLogin'))
+servidor.use('/api/getuserlogin', require('./ROUTER/getUserLogin'))
 servidor.use('/api/usuario', require('./ROUTER/usuarios'))
 
 const myServerExpress = servidor.listen(servidor.get('port'), e => {
@@ -48,8 +48,8 @@ io.on('connection', socket => {
 			io.sockets.emit('updateConect', vecConect)
 		}
 	})
-	socket.on('sendUserConected', nameUser => {
-		vecConect = [...vecConect, { idConexion: socket.id, nombreUsuario: nameUser }]
+	socket.on('sendUserConected', usuario => {
+		vecConect = [...vecConect, { idConexion: socket.id, usuario: usuario }]
 		io.sockets.emit('updateConect', vecConect)
 	})
 
