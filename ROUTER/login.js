@@ -40,7 +40,8 @@ router.post('/', async (req, res) => {
 		}
 	} catch (e) {
 		cerrarConexionPOOL()
-		res.status(403).json({ mensaje: e.message })
+		console.log(e)
+		res.status(403).json({ logOK: false, mensaje: e.message })
 	}
 })
 

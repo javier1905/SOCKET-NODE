@@ -49,6 +49,7 @@ io.on('connection', socket => {
 		}
 	})
 	socket.on('sendUserConected', usuario => {
+		console.log(usuario)
 		vecConect = [...vecConect, { idConexion: socket.id, usuario: usuario }]
 		io.sockets.emit('updateConect', vecConect)
 	})
