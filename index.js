@@ -49,15 +49,29 @@ io.on('connection', socket => {
 		}
 	})
 	socket.on('sendUserConected', usuario => {
-		console.log(usuario)
+		var index = -1
+		vecConect.forEach((u, i) => {
+			try {
+				if (u.usuario.emailUsuario === usuario.emailUsuario) {
+					index = i
+					return
+				}
+			} catch (e) {
+				index = -1
+			}
+		})
+
+		index !== -1 && vecConect.splice(index, 1)
+
 		vecConect = [...vecConect, { idConexion: socket.id, usuario: usuario }]
 		io.sockets.emit('updateConect', vecConect)
 	})
 
 	socket.on('enviarMsj:react-node', datos => {
+		console.log(datos)
 		socket.to(datos.idSocketReceptor).emit('resibirMsj:node-react', {
 			idSocketEmisor: socket.id,
-			nombreEmisor: datos.nombre,
+			usuario: datos.usuario,
 			mensajeRecibido: datos.mensaje,
 		})
 	})
@@ -65,7 +79,7 @@ io.on('connection', socket => {
 	socket.on('escribiendo:react-node', datos => {
 		socket.to(datos.idSocketEmisor).emit('escribiendo:node-react', {
 			idSocketEmisor: socket.id,
-			nombreEmisor: datos.nameUser,
+			usuario: datos.usuario,
 			es: datos.es,
 		})
 	})
